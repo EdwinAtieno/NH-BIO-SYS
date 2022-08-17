@@ -1,0 +1,49 @@
+.not-found__container {
+  background-color: $riziki-dark-orange;
+  color: $riziki-dark-green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+
+  @include for-laptop-up {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.not-found__image,
+.not-found__text {
+  width: 100%;
+  text-align: center;
+  @include for-laptop-up {
+    width: 50%;
+    text-align: left;
+  }
+}
+
+.not-found__image {
+  padding: 2rem;
+  svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.not-found__text {
+  padding: 2rem;
+  color: $riziki-dark-green;
+
+  h1 {
+    font-size: 8rem;
+  }
+  h2 {
+    font-size: 3rem;
+  }
+  p {
+    color: $black;
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,103 @@
+.sidebar {
+  border-right: 1px solid $off-white;
+  height: 100vh;
+  background-color: $white;
+  max-width: 18rem;
+  min-width: 15rem;
+  width: 20%;
+  transition: transform 0.5s;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+
+  .top {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.5rem;
+    border-bottom: 1px solid $off-white;
+
+    svg {
+      height: 4rem;
+      width: auto;
+    }
+    h6 {
+      margin: 0;
+      padding: 0 0.5rem;
+      padding-top: 0.5rem;
+    }
+  }
+
+  .center {
+    padding-left: 10px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .title {
+        font-size: 10px;
+        font-weight: bold;
+        color: $gray;
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+      a {
+        text-decoration: none;
+      }
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $light-green;
+        }
+
+        .icon {
+          font-size: 18px;
+          color: $riziki-light-green;
+        }
+
+        span {
+          font-size: 13px;
+          font-weight: 600;
+          color: $gray;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+
+.toggle-sidebar {
+  @include for-desktop-up {
+    visibility: hidden;
+  }
+}
+
+.sidebar--visible {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  height: calc(100vh - 4rem);
+
+  @include for-desktop-up {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+}
+
+.sidebar--hidden {
+  display: none;
+  @include for-desktop-up {
+    display: block;
+  }
+}
