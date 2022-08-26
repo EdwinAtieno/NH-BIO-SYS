@@ -27,6 +27,10 @@
   border-color: $white;
 }
 
+.loader-black {
+  border-color: black;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

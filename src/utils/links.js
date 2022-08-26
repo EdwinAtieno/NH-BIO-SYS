@@ -16,6 +16,8 @@ export const links = {
   orders: '/orders',
   regions: '/regions',
   myAccount: '/my-account',
+  addRegion: '/add-region',
+  regionsInMap: '/regions/map',
 };
 
 export default links;

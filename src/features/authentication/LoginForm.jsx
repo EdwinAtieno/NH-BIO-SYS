@@ -1,17 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import AuthContext from '../../context/auth/AuthContext';
-import { signInUser } from '../../services/UserAuth';
+import jwtDecode from 'jwt-decode';
+import dayjs from 'dayjs';
+import { signInUser } from '../../services/auth';
 import Button from '../../components/buttons/Button';
 import FormGroup from '../../components/forms/FormGroup';
 import Riziki from '../../assets/svgs/Logos';
 import { links } from '../../utils/links';
+import useAuth from '../../hooks/useAuth';
 
 const LoginForm = () => {
-  const { signInAdmin } = useContext(AuthContext);
+  const { authToken, signIn, logOut } = useAuth();
   const initialValues = {
     phone_number: '',
     password: '',
@@ -20,8 +22,25 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (authToken) {
+      try {
+        const userData = jwtDecode(authToken?.refresh);
+        const isExpired = dayjs.unix(userData?.exp).diff(dayjs()) < 1;
+
+        if (!isExpired) {
+          navigate(links.dashboard, { replace: true });
+        }
+      } catch (err) {
+        logOut();
+        navigate(links.signIn, { replace: true });
+      }
+    }
+  }, []);
+
   const { isLoading, mutate } = useMutation(signInUser, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      signIn(data);
       navigate(links.dashboard);
     },
 
@@ -35,7 +54,6 @@ const LoginForm = () => {
         setErrors({ form: 'Invalid phone number or password' });
         return;
       }
-
       toast.error('Oh snap! Something went wrong!');
     },
   });
@@ -48,14 +66,13 @@ const LoginForm = () => {
     e.preventDefault();
     setErrors(null);
     mutate(values);
-    signInAdmin(values.phone_number, true);
   };
 
   return (
     <div className="auth-form__wrapper">
       <Riziki />
       <h5 className="text-muted">Admin Panel</h5>
-      <h3>Sign In</h3>
+      <h4>Sign In</h4>
       <p className="text-muted">
         To manage products, orders, deliveries and much more
       </p>
@@ -81,7 +98,7 @@ const LoginForm = () => {
           required
         />
         <Button
-          variant="flat"
+          variant="green"
           type="submit"
           isLoading={isLoading}
           disabled={isLoading}

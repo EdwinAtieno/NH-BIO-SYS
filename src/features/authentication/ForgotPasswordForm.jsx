@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useMutation } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { recoverPassword } from '../../services/UserAuth';
+import { recoverPassword } from '../../services/auth';
 import Button from '../../components/buttons/Button';
 import FormGroup from '../../components/forms/FormGroup';
 import Riziki from '../../assets/svgs/Logos';
@@ -55,7 +55,7 @@ const ForgotPasswordForm = () => {
         />
 
         <Button
-          variant="flat"
+          variant="green"
           type="submit"
           isLoading={isLoading}
           disabled={isLoading}

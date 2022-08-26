@@ -1,40 +1,39 @@
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const FormGroup = ({
-  type,
+const FormSelect = ({
+  options,
   label,
   name,
-  value,
-  placeholder,
+  defaultValue,
   onChange,
   size,
   required,
   error,
   disabled,
-  as,
-  rows,
-  minLength,
-  maxLength,
   extraInfo,
+  description,
 }) => (
   <Form.Group className="form-group" controlId={name}>
     <Form.Label>{label}</Form.Label>
-    <Form.Control
-      as={as}
-      minLength={minLength}
-      maxLength={maxLength}
-      size={size}
-      rows={rows}
-      placeholder={placeholder}
-      type={type}
+    <Form.Select
       onChange={onChange}
       name={name}
-      value={value}
       required={required}
       disabled={disabled}
       isInvalid={error}
-    />
+      size={size}
+      defaultValue={defaultValue}
+    >
+      <option disabled value="">
+        {description}
+      </option>
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </Form.Select>
     {extraInfo && <small className="text-muted">{extraInfo}</small>}
     {error && (
       <div className="text-danger">
@@ -44,37 +43,38 @@ const FormGroup = ({
   </Form.Group>
 );
 
-FormGroup.propTypes = {
+const optionShape = PropTypes.shape({
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+});
+
+optionShape.defaultProps = {
+  disabled: false,
+};
+
+FormSelect.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  defaultValue: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
-  type: PropTypes.string,
+  options: PropTypes.arrayOf(optionShape).isRequired,
   size: PropTypes.string,
   required: PropTypes.bool,
   error: PropTypes.string,
   disabled: PropTypes.bool,
-  minLength: PropTypes.number,
-  maxLength: PropTypes.number,
-  as: PropTypes.string,
-  rows: PropTypes.number,
   extraInfo: PropTypes.string,
+  description: PropTypes.string,
 };
 
-FormGroup.defaultProps = {
-  type: 'text',
-  placeholder: '',
+FormSelect.defaultProps = {
   size: 'lg',
   required: false,
   error: undefined,
   disabled: false,
-  value: '',
-  minLength: undefined,
-  maxLength: undefined,
-  as: 'input',
-  rows: undefined,
+  defaultValue: '',
   extraInfo: undefined,
+  description: 'Select an option',
 };
 
-export default FormGroup;
+export default FormSelect;

@@ -1,7 +1,7 @@
 import LoginForm from '../features/authentication/LoginForm';
 import AuthLayout from '../layouts/AuthLayout';
 
-const SignInPage = () => {
+const SignIn = () => {
   return (
     <div className="sign-in-page__container">
       <AuthLayout>
@@ -11,4 +11,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignIn;

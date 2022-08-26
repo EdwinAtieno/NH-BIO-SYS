@@ -2,8 +2,8 @@
   border-right: 1px solid $off-white;
   height: 100vh;
   background-color: $white;
-  max-width: 18rem;
   min-width: 15rem;
+  max-width: 18rem;
   width: 20%;
   transition: transform 0.5s;
   position: sticky;
@@ -64,12 +64,16 @@
           font-size: 18px;
           color: $riziki-light-green;
         }
-
-        span {
-          font-size: 13px;
+        .no-style-button {
+          width: 100%;
+        }
+        span,
+        .no-style-button {
+          font-size: 0.8rem;
           font-weight: 600;
           color: $gray;
-          margin-left: 10px;
+          margin-left: 0.6rem;
+          text-align: left;
         }
       }
     }

@@ -1,9 +1,9 @@
 import Loader from '../../assets/svgs/Spinners';
 import Riziki from '../../assets/svgs/Logos';
 
-const SuspenseLoader = () => {
+const FullPageLoader = () => {
   return (
-    <div className="suspense-loader__wrapper">
+    <div className="full-page-loader__wrapper">
       <span />
       <Riziki />
       <div>
@@ -14,4 +14,4 @@ const SuspenseLoader = () => {
   );
 };
 
-export default SuspenseLoader;
+export default FullPageLoader;

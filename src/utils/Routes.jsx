@@ -1,27 +1,31 @@
 import { Route, Routes } from 'react-router-dom';
 import React, { Suspense } from 'react';
-import SuspenseLoader from '../components/spinners/SuspenseLoader';
-import { links } from './links';
+import FullPageLoader from '../components/spinners/FullPageLoader';
 import PrivateRoutes from './PrivateRoutes';
+import { links } from './links';
 
 const BaseRouter = () => {
-  const DashboardPage = React.lazy(() => import('../pages/DashboardPage'));
-  const SignInPage = React.lazy(() => import('../pages/SignInPage'));
-  const ForgotPasswordPage = React.lazy(() =>
-    import('../pages/ForgotPasswordPage')
-  );
-  const NotFoundPage = React.lazy(() => import('../pages/NotFoundPage'));
+  const Dashboard = React.lazy(() => import('../pages/Dashboard'));
+  const AddRegion = React.lazy(() => import('../pages/AddRegion'));
+  const Regions = React.lazy(() => import('../pages/Regions'));
+  const RegionsMap = React.lazy(() => import('../pages/RegionsMap'));
+  const SignIn = React.lazy(() => import('../pages/SignIn'));
+  const ForgotPassword = React.lazy(() => import('../pages/ForgotPassword'));
+  const NotFound = React.lazy(() => import('../pages/NotFound'));
 
   return (
-    <Suspense fallback={<SuspenseLoader />}>
+    <Suspense fallback={<FullPageLoader />}>
       <Routes>
         <Route element={<PrivateRoutes />}>
-          <Route path={links.dashboard} element={<DashboardPage />} />
+          <Route path={links.dashboard} element={<Dashboard />} />
+          <Route path={links.addRegion} element={<AddRegion />} />
+          <Route path={links.regions} element={<Regions />} />
+          <Route path={links.regionsInMap} element={<RegionsMap />} />
         </Route>
 
-        <Route path={links.signIn} element={<SignInPage />} />
-        <Route path={links.forgotPassword} element={<ForgotPasswordPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path={links.signIn} element={<SignIn />} />
+        <Route path={links.forgotPassword} element={<ForgotPassword />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

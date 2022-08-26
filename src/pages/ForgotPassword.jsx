@@ -1,7 +1,7 @@
 import ForgotPasswordForm from '../features/authentication/ForgotPasswordForm';
 import AuthLayout from '../layouts/AuthLayout';
 
-const ForgotPasswordPage = () => {
+const ForgotPassword = () => {
   return (
     <AuthLayout>
       <ForgotPasswordForm />
@@ -9,4 +9,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default ForgotPassword;

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
 import { RiDashboardFill, RiUser3Fill } from 'react-icons/ri';
 import { FaUserPlus, FaUserCheck, FaStoreAlt, FaTruck } from 'react-icons/fa';
 import { BsFillCreditCardFill, BsFillGearFill } from 'react-icons/bs';
@@ -7,12 +6,12 @@ import { FiLogOut } from 'react-icons/fi';
 import { MdCategory } from 'react-icons/md';
 import { BiCategory } from 'react-icons/bi';
 import PropTypes from 'prop-types';
-import AuthContext from '../context/auth/AuthContext';
 import Riziki from '../assets/svgs/Logos';
 import { links } from '../utils/links';
+import useAuth from '../hooks/useAuth';
 
 const Sidebar = ({ show }) => {
-  const { logOutAdmin } = useContext(AuthContext);
+  const { logOut } = useAuth();
 
   return (
     <div
@@ -122,14 +121,9 @@ const Sidebar = ({ show }) => {
           </Link>
           <li>
             <FiLogOut className="icon" />
-            <span
-              role="button"
-              tabIndex={-1}
-              onClick={logOutAdmin}
-              onKeyDown={logOutAdmin}
-            >
+            <button className="no-style-button" type="button" onClick={logOut}>
               Logout
-            </span>
+            </button>
           </li>
         </ul>
       </div>

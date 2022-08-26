@@ -12,3 +12,8 @@ html {
 a {
   color: inherit;
 }
+
+.centered {
+  @include flexCenter();
+  flex-direction: column;
+}

@@ -24,6 +24,21 @@
     border-radius: 0.5rem;
     border: 1px solid #e5e7eb;
   }
+  .other-options {
+    font-size: 0.9rem;
+    color: $dark-gray;
+    width: 100%;
+    margin-top: 1rem;
+
+    a {
+      cursor: pointer;
+      color: inherit;
+      text-decoration: underline;
+      &:hover {
+        color: black;
+      }
+    }
+  }
 }
 
 .auth-form__form {
@@ -37,19 +52,13 @@
     color: $dark-gray;
     font-weight: bold;
   }
-}
 
-.other-options {
-  font-size: 0.9rem;
-  color: $dark-gray;
-  width: 100%;
-  margin-top: 1rem;
-  a {
-    cursor: pointer;
-    color: inherit;
-    text-decoration: underline;
-    &:hover {
-      color: black;
+  &:required {
+    label::after {
+      content: '*';
+      color: $red;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
     }
   }
 }

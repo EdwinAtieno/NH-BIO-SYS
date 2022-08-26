@@ -1,37 +1,66 @@
-import { useContext } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
-import { jwt_decode as jwtDecode } from 'jwt-decode';
-import dayjs from 'dayjs';
-import AuthContext from '../context/auth/AuthContext';
+import jwtDecode from 'jwt-decode';
 import { baseURL } from '../utils/api';
+import useAuth from './useAuth';
+import useRefreshToken from './useRefreshToken';
 
 const useAxios = () => {
-  const { setAuthToken, setUser, authToken } = useContext(AuthContext);
+  const { setAuthToken, setUser, authToken } = useAuth();
+  const refresh = useRefreshToken();
 
   const axiosInstance = axios.create({
     baseURL,
     headers: { Authorization: `Bearer ${authToken?.access}` },
   });
 
-  axiosInstance.interceptors.request.use(async (req) => {
-    const admin = jwtDecode(authToken?.access);
-    const isExpired = dayjs.unix(admin.exp).diff(dayjs()) < 1;
+  useEffect(() => {
+    const requestIntercept = axiosInstance.interceptors.request.use(
+      (config) => {
+        if (!config.headers.Authorization) {
+          // eslint-disable-next-line no-param-reassign
+          config.headers.Authorization = `Bearer ${authToken?.accessToken}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
 
-    if (!isExpired) return req;
+    const responseIntercept = axiosInstance.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const prevRequest = error?.config;
+        if (
+          error?.response?.status === 403 ||
+          (error?.response?.status === 401 && !prevRequest?.sent)
+        ) {
+          prevRequest.sent = true;
 
-    const response = await axios.post(`${baseURL}/token/refresh`, {
-      refresh: authToken.refresh,
-    });
+          const token = await refresh();
+          localStorage.setItem(
+            'user',
+            JSON.stringify({
+              isAuthToken: true,
+              user: jwtDecode(token?.access),
+              token,
+            })
+          );
 
-    localStorage.setItem('authToken', JSON.stringify(response.data));
+          setAuthToken(token);
+          setUser(jwtDecode(token?.access));
 
-    setAuthToken(response.data);
-    setUser(jwtDecode(response.data.access));
+          prevRequest.headers.Authorization = `Bearer ${token?.access}`;
+          return axiosInstance(prevRequest);
+        }
+        return Promise.reject(error);
+      }
+    );
 
-    req.headers.Authorization = `Bearer ${authToken?.access}`;
-
-    return req;
-  });
+    return () => {
+      axiosInstance.interceptors.request.eject(requestIntercept);
+      axiosInstance.interceptors.response.eject(responseIntercept);
+    };
+  }, [authToken]);
 
   return axiosInstance;
 };

@@ -1,4 +1,5 @@
-.transaction-status {
+.transaction-status,
+.region-status {
   border-radius: 1rem;
   text-align: center;
   font-weight: 500;
@@ -6,12 +7,14 @@
   padding: 0.5rem 1rem;
 }
 
-.transaction-status--cancelled {
+.transaction-status--cancelled,
+.region-status--disabled {
   color: $danger;
   background-color: $danger-light;
 }
 
-.transaction-status--completed {
+.transaction-status--completed,
+.region-status--active {
   color: $success;
   background-color: $success-light;
 }

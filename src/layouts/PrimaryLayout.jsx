@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
+import useAuth from '../hooks/useAuth';
 import Sidebar from './Sidebar';
 
 const PrimaryLayout = ({ children }) => {
+  const { user } = useAuth();
   const [show, setShow] = useState(false);
 
   const toggle = () => {
@@ -38,7 +40,9 @@ const PrimaryLayout = ({ children }) => {
 
             <ul>
               <li>
-                <strong className="text-muted">{greeting} Lewis Maina</strong>
+                <strong className="text-muted">
+                  {greeting} {user?.first_name} {user?.last_name}
+                </strong>
               </li>
             </ul>
           </nav>

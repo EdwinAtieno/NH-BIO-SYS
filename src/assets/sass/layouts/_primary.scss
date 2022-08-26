@@ -1,7 +1,8 @@
 .primary-layout__container {
-  width: 100%;
   position: relative;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 
   .primary-layout__header {
     position: sticky;
@@ -18,7 +19,7 @@
 .primary-layout__main {
   width: 100%;
   @include for-desktop-up {
-    width: 80%;
+    min-width: 80%;
   }
 }
 

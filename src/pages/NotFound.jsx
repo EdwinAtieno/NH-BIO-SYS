@@ -2,7 +2,7 @@ import Lost from '../assets/svgs/Illustrations';
 import Button from '../components/buttons/Button';
 import { links } from '../utils/links';
 
-const NotFoundPage = () => {
+const NotFound = () => {
   return (
     <section className="not-found__container">
       <div className="not-found__image">
@@ -20,4 +20,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default NotFound;

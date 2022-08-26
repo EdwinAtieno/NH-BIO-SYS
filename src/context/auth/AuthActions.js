@@ -1,3 +1,3 @@
-export const SIGN_IN_ADMIN = 'SIGN_IN_ADMIN';
-export const LOGOUT_ADMIN = 'LOGOUT_ADMIN';
-export const FORGOT_PASSWORD_ADMIN = 'FORGOT_PASSWORD_ADMIN';
+export const SIGN_IN = 'SIGN_IN';
+export const LOGOUT = 'LOGOUT';
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';

@@ -1,20 +1,21 @@
-import {
-  SIGN_IN_ADMIN,
-  LOGOUT_ADMIN,
-  FORGOT_PASSWORD_ADMIN,
-} from './AuthActions';
+import { SIGN_IN, LOGOUT, FORGOT_PASSWORD } from './AuthActions';
 
 const AuthReducer = (state, action) => {
   switch (action.type) {
-    case SIGN_IN_ADMIN:
+    case SIGN_IN:
+      localStorage.setItem('user', JSON.stringify(action.payload));
       return {
-        admin: action.payload,
+        ...action.payload,
       };
-    case LOGOUT_ADMIN:
+    case LOGOUT:
+      localStorage.clear();
       return {
-        admin: null,
+        ...state,
+        isAuthenticated: false,
+        user: null,
+        token: null,
       };
-    case FORGOT_PASSWORD_ADMIN:
+    case FORGOT_PASSWORD:
       return {
         ...state,
       };

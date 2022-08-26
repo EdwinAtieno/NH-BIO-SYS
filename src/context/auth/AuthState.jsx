@@ -1,58 +1,64 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
+import jwtDecode from 'jwt-decode';
 import AuthContext from './AuthContext';
 import AuthReducer from './AuthReducer';
 
-import {
-  SIGN_IN_ADMIN,
-  LOGOUT_ADMIN,
-  FORGOT_PASSWORD_ADMIN,
-} from './AuthActions';
+import { SIGN_IN, LOGOUT, FORGOT_PASSWORD } from './AuthActions';
 
 const AuthState = ({ children }) => {
   const initialState = {
-    admin: null,
+    isAuthenticated: false,
+    user: null,
+    token: null,
   };
 
   const [state, dispatch] = useReducer(AuthReducer, [], () => {
-    const localData = localStorage.getItem('user');
-
-    return localData ? JSON.parse(localData) : initialState;
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData) : initialState;
   });
 
+  const [user, setUser] = useState(state?.user);
+  const [authToken, setAuthToken] = useState(state?.token);
+
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(state));
+    setUser(state?.user);
+    setAuthToken(state?.token);
   }, [state]);
 
   // Sign in user
-  const signInAdmin = (phoneNumber, isAuth) => {
+  const signIn = (token) => {
     dispatch({
-      type: SIGN_IN_ADMIN,
+      type: SIGN_IN,
       payload: {
-        phoneNumber,
-        isAuth,
+        isAuthenticated: true,
+        user: jwtDecode(token.access),
+        token,
       },
     });
   };
 
   // Logout user
-  const logOutAdmin = () => {
+  const logOut = () => {
     dispatch({
-      type: LOGOUT_ADMIN,
+      type: LOGOUT,
     });
   };
 
   // Forgot Password
   const forgotPassword = () => {
     dispatch({
-      type: FORGOT_PASSWORD_ADMIN,
+      type: FORGOT_PASSWORD,
     });
   };
 
   const value = useMemo(() => ({
-    admin: state.admin,
-    signInAdmin,
-    logOutAdmin,
+    user,
+    authToken,
+    setUser,
+    setAuthToken,
+    signIn,
+    logOut,
     forgotPassword,
   }));
 

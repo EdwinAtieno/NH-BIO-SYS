@@ -11,6 +11,7 @@ const Button = ({
   disabled,
   isLoading,
   className,
+  onClick,
 }) => {
   return (
     <ButtonBs
@@ -20,6 +21,7 @@ const Button = ({
       variant={variant}
       size={size}
       disabled={disabled}
+      onClick={onClick}
     >
       {children} {isLoading && <Loader />}
     </ButtonBs>
@@ -35,6 +37,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 Button.defaultProps = {
@@ -46,6 +49,7 @@ Button.defaultProps = {
   disabled: false,
   isLoading: false,
   className: '',
+  onClick: undefined,
 };
 
 export default Button;
