@@ -2,7 +2,6 @@
 
 # NAIROBI BIOMEDICAL SYSTEMS PANEL
 
-
 ## Table of Contents
 
 - [Requirements](#requirements)
@@ -41,7 +40,7 @@
 Navigate to the cloned folder:
 
 ```
-cd riziki-admin-fend
+cd NH-BIO-SYS
 ```
 
 So as to install the packages in your environment, run:
