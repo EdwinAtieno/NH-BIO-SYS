@@ -1,0 +1,90 @@
+.dashboard-widget {
+  border-radius: 0.5rem;
+  border-top-width: 3px;
+  border-top-style: solid;
+  box-shadow: #959da533 0px 8px 24px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer {
+    color: $gray;
+  }
+}
+
+.dashboard-widget--dark-green {
+  border-top-color: $riziki-dark-green;
+  .stats {
+    color: $riziki-dark-green;
+  }
+}
+
+.dashboard-widget--light-green {
+  border-top-color: $riziki-light-green;
+  .stats {
+    color: $riziki-light-green;
+  }
+}
+
+.dashboard-widget--light-orange {
+  border-top-color: $riziki-light-orange;
+  .stats {
+    color: $riziki-light-orange;
+  }
+}
+
+.dashboard-widget--dark-orange {
+  border-top-color: $riziki-dark-orange;
+  .stats {
+    color: $riziki-dark-orange;
+  }
+}
+
+.dashboard-widget--magenta {
+  border-top-color: $riziki-magenta;
+  .stats {
+    color: $riziki-magenta;
+  }
+}
+
+.dashboard-widget--earth-brown {
+  border-top-color: $riziki-earth-brown;
+  .stats {
+    color: $riziki-earth-brown;
+  }
+}
+
+.fullfilled-orders {
+  box-shadow: #959da533 0px 8px 24px;
+  border-radius: 0.5rem;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  margin: 0 1rem;
+  margin-bottom: 1rem;
+  .progress {
+    width: 13rem;
+    height: 13rem;
+    background-color: transparent;
+  }
+
+  main {
+    h3 {
+      color: $riziki-dark-orange;
+    }
+  }
+  footer {
+    h5 {
+      color: $riziki-light-green;
+    }
+  }
+}

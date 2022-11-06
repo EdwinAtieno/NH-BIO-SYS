@@ -1,0 +1,17 @@
+.dashboard-page__container {
+  padding: 1rem;
+  .widgets__wrapper {
+    .widgets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  .latest-transactions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+}
