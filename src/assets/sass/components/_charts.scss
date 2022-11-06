@@ -1,0 +1,8 @@
+.chart {
+  width: 100%;
+  margin: 1rem;
+  min-width: 20rem;
+  @include for-laptop-up {
+    flex-wrap: wrap;
+  }
+}

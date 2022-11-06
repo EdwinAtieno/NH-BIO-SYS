@@ -1,0 +1,25 @@
+// third-party styles
+@import '~bootstrap/scss/bootstrap';
+@import '~react-toastify/dist/ReactToastify.css';
+@import '~react-circular-progressbar/dist/styles.css';
+
+// abstracts
+@import './abstracts';
+
+// base
+@import './base';
+
+// components
+@import './components';
+
+// layouts
+@import './layouts';
+
+// pages
+@import './pages';
+
+// themes
+@import './themes';
+
+// vendors
+@import './vendors';

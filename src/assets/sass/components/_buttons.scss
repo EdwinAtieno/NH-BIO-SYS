@@ -1,0 +1,38 @@
+.no-style-button {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.btn-green {
+  background-color: $riziki-dark-green;
+  color: $white;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+
+  &:active,
+  &:disabled,
+  &:hover {
+    background-color: $riziki-magenta;
+    color: $white;
+  }
+}
+
+.btn-earth-brown {
+  background-color: $riziki-earth-brown;
+  color: $white;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+
+  &:active,
+  &:disabled,
+  &:hover {
+    background-color: $riziki-magenta;
+    color: $white;
+  }
+}
