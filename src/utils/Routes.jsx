@@ -12,6 +12,7 @@ const BaseRouter = () => {
   const SignUp = React.lazy(() => import('../pages/SignUp'));
   const Repairs = React.lazy(() => import('../pages/Repairs'));
   const Staffs = React.lazy(() => import('../pages/Staffs'));
+  const Equipments = React.lazy(() => import('../pages/Equipments'));
 
   return (
     <Suspense fallback={<FullPageLoader />}>
@@ -20,6 +21,7 @@ const BaseRouter = () => {
           <Route path={links.dashboard} element={<Dashboard />} />
           <Route path={links.repairs} element={<Repairs />} />
           <Route path={links.staffs} element={<Staffs />} />
+          <Route path={links.equipments} element={<Equipments />} />
         </Route>
         <Route path={links.signUp} element={<SignUp />} />
         <Route path={links.signIn} element={<SignIn />} />
