@@ -1,0 +1,53 @@
+.spinner {
+  margin: 1rem;
+  color: $light-blue;
+  height: 2rem;
+  width: 2rem;
+  animation: spin 0.7s infinite linear;
+}
+
+.spinner-green {
+  fill: $riziki-dark-green;
+}
+
+.loader {
+  display: inline-block;
+  border: 2px solid $white;
+  margin: 0 0.5rem;
+  height: 1.1rem;
+  width: 1.1rem;
+  border-bottom-color: transparent !important;
+  border-radius: 100%;
+  background: transparent;
+  animation: spin 1s infinite linear;
+  animation-fill-mode: both;
+}
+
+.loader-white {
+  border-color: $white;
+}
+
+.loader-black {
+  border-color: $black;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.full-page-loader__wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: $riziki-light-orange;
+  color: $riziki-dark-green;
+}

@@ -6,7 +6,7 @@ const AuthLayout = ({ children }) => {
       <header />
       <main>{children}</main>
       <footer className="copyright">
-        Copyright &copy;{new Date().getFullYear()}, Riziki
+        Copyright &copy;{new Date().getFullYear()}, NHS
       </footer>
     </section>
   );

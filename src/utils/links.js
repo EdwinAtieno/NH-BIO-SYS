@@ -6,8 +6,8 @@ export const links = {
   customers: '/users?type=customer',
   agents: '/users?type=agent',
   drivers: '/users?type=driver',
-  deliveryOfficers: '/users?type=delivery-officer',
-  products: '/products',
+  equipments: '/equipments',
+  repairs: '/repairs',
   classifications: '/classifications',
   categories: '/categories',
   subCategories: '/sub-categories',
@@ -16,8 +16,9 @@ export const links = {
   orders: '/orders',
   regions: '/regions',
   myAccount: '/my-account',
-  addRegion: '/add-region',
-  regionsInMap: '/regions/map',
+  staffs: '/staffs',
+  newStaff: '/add/staff',
+  signUp: '/sign-up',
 };
 
 export default links;

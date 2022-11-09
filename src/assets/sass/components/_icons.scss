@@ -1,0 +1,19 @@
+.back-icon-brown {
+  fill: $riziki-earth-brown;
+}
+
+.back-icon--dark {
+  fill: $black;
+}
+
+.back-icon-tick-margin {
+  margin-left: -1em;
+  margin-top: 0.2em;
+}
+
+.cart-icon--dark {
+  fill: $black;
+  &:hover {
+    fill: $white;
+  }
+}

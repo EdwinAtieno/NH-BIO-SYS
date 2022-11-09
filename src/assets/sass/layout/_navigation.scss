@@ -1,0 +1,30 @@
+.bottom-nav {
+  width: 100%;
+  max-width: 480px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: $riziki-light-orange;
+  font-size: 0.9rem;
+
+  nav {
+    border-top: 1px solid $dark;
+  }
+}
+
+.bottom-nav__icon {
+  @include flexCenter();
+  flex-direction: column;
+  text-decoration: none;
+  color: $black;
+  opacity: 0.6;
+  svg {
+    font-size: 1.7rem;
+  }
+}
+
+.bottom-nav__icon--active {
+  opacity: 1;
+}

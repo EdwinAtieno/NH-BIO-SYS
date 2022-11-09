@@ -15,7 +15,7 @@ import useAuth from '../../hooks/useAuth';
 const LoginForm = () => {
   const { authToken, signIn, logOut } = useAuth();
   const initialValues = {
-    phone_number: '',
+    staff_number: '',
     password: '',
   };
   const [values, setValues] = useState(initialValues);
@@ -29,7 +29,7 @@ const LoginForm = () => {
         const isExpired = dayjs.unix(userData?.exp).diff(dayjs()) < 1;
 
         if (!isExpired) {
-          navigate(links.dashboard, { replace: true });
+          navigate(links.signIn, { replace: true });
         }
       } catch (err) {
         logOut();
@@ -41,7 +41,7 @@ const LoginForm = () => {
   const { isLoading, mutate } = useMutation(signInUser, {
     onSuccess: (data) => {
       signIn(data);
-      navigate(links.dashboard);
+      navigate(links.shops);
     },
 
     onError: (error) => {
@@ -51,7 +51,7 @@ const LoginForm = () => {
       }
 
       if (error?.response?.status === 401) {
-        setErrors({ form: 'Invalid phone number or password' });
+        setErrors({ form: 'Invalid staff number or password' });
         return;
       }
       toast.error('Oh snap! Something went wrong!');
@@ -71,26 +71,24 @@ const LoginForm = () => {
   return (
     <div className="auth-form__wrapper">
       <Riziki />
-      <h5 className="text-muted">Admin Panel</h5>
+      <h5 className="text-muted"> </h5>
       <h4>Sign In</h4>
-      <p className="text-muted">
-        To manage products, orders, deliveries and much more
-      </p>
+      <p className="text-muted">To manage equipment, supplies and much more</p>
       <Form className="auth-form__form" onSubmit={onSubmitHandler}>
         <FormGroup
-          type="number"
-          name="phone_number"
-          label="Phone Number"
-          value={values.phone_number}
+          type="text"
+          name="staff_number"
+          label="Staff Number"
+          value={values.staff_number}
           onChange={onChange}
-          placeholder="254 xxx xxx xxx"
-          error={errors?.phone_number}
+          placeholder="N xxx xxx"
+          error={errors?.staff_number}
           required
         />
         <FormGroup
           type="password"
           name="password"
-          label="Pin"
+          label="password"
           value={values.password}
           onChange={onChange}
           placeholder="******"
@@ -112,6 +110,9 @@ const LoginForm = () => {
 
       <div className="other-options">
         <Link to={links.forgotPassword}>Forgot Pin</Link>
+      </div>
+      <div className="other-options">
+        Do not have an account? <Link to={links.signUp}>Sign Up</Link>
       </div>
     </div>
   );

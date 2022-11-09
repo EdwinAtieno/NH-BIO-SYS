@@ -1,0 +1,21 @@
+.base-layer {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background-color: $riziki-light-orange;
+  margin: auto;
+
+  header {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    height: 28vh;
+    background-color: $riziki-light-green;
+    border-bottom-left-radius: 70%;
+    border-bottom-right-radius: 70%;
+    width: 100%;
+    align-items: center;
+    align-content: space-between;
+  }
+}

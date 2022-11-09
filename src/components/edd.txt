@@ -1,0 +1,276 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import { useQuery, useMutation } from '@tanstack/react-query';
+import React, { useEffect, useRef, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Button, message, Space, Table, Form, Input, Modal, Tag } from 'antd';
+import 'antd/dist/antd.min.css';
+import { toast } from 'react-toastify';
+import {
+  FilePdfOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
+import { useReactToPrint } from 'react-to-print';
+import { CSVLink } from 'react-csv';
+import { getAllUser, updateUser } from '../../services/users';
+import FullPageLoader from '../../components/spinners/FullPageLoader';
+import ErrorMessage from '../../components/errors/ErrorMessage';
+import useAxios from '../../hooks/useAxios';
+import '../repairs/repair.scss';
+import { links } from '../../utils/links';
+
+const UsersForm = () => {
+  const api = useAxios();
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [form] = Form.useForm();
+
+  const { data, isLoading, isError, refetch, isFetching } = useQuery(
+    ['id'],
+    () => getAllUser(api)
+  );
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const { mutate } = useMutation(
+    (values) => updateUser(api, editingStudent.id, values),
+    {
+      onSuccess: () => {
+        toast.success('You have registered successfully.', {
+          autoClose: 8000,
+        });
+      },
+    }
+  );
+
+  const onSubmitHandler = (values) => {
+    mutate(values);
+    console.log(values);
+  };
+  const onEditStudent = (record) => {
+    setIsEditing(true);
+    setEditingStudent({ ...record });
+  };
+  const resetEditing = () => {
+    setIsEditing(false);
+    setEditingStudent(null);
+  };
+
+  const columns = [
+    {
+      dataIndex: 'id',
+      title: 'Id',
+    },
+    {
+      dataIndex: 'first_name',
+      title: 'First Name',
+      sorter: (record1, record2) => {
+        return record1.first_name > record2.first_name;
+      },
+    },
+    {
+      dataIndex: 'last_name',
+      title: 'Last Name',
+      sorter: (record1, record2) => {
+        return record1.last_name > record2.last_name;
+      },
+    },
+    {
+      dataIndex: 'staff_number',
+      title: 'Staff Number',
+      sorter: (record1, record2) => {
+        return record1.staff_number > record2.staff_number;
+      },
+    },
+    {
+      dataIndex: 'roles',
+      title: 'Roles',
+      filters: [
+        { text: 'biomed', value: 'biomed' },
+        { text: 'h.o.d', value: 'h.o.d' },
+        { text: 'admin', value: 'admin' },
+        { text: 'supplier_admin', value: 'supplier_admin' },
+      ],
+      onFilter: (value, record) => record.roles.indexOf(value) === 0,
+      render: (_, { roles }) => (
+        <>
+          {roles.map((role) => {
+            let color = role.length > 5 ? 'geekblue' : 'green';
+            if (role === 'loser') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={role}>
+                {role.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      dataIndex: 'phone_number',
+      title: 'Phone Number',
+      sorter: (record1, record2) => {
+        return record1.phone_number > record2.phone_number;
+      },
+    },
+    {
+      dataIndex: 'email',
+      title: 'Email',
+      sorter: true,
+    },
+    {
+      title: 'Actions',
+      render: (record) => {
+        return (
+          <EditOutlined
+            onClick={() => {
+              onEditStudent(record);
+            }}
+          />
+        );
+      },
+    },
+  ];
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="centered">
+        <FullPageLoader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="centered">
+        <ErrorMessage message="Permission Denied" />
+      </div>
+    );
+  }
+  return (
+    <div className="listContainer">
+      <div className="listTitle">
+        <em> Staffs Present and Their Roles</em>
+      </div>
+      <Space style={{ float: 'right' }}>
+        <CSVLink
+          filename="Staff_Table.csv"
+          data={data}
+          className="btn btn-primary"
+          onClick={() => {
+            message.success('The file is downloading');
+          }}
+        >
+          Export to CSV
+        </CSVLink>
+
+        <Button onClick={handlePrint} type="primary" danger>
+          <FilePdfOutlined /> Export to PDF
+        </Button>
+      </Space>
+      <div ref={componentRef}>
+        {data && (
+          <Table
+            className="listTitle"
+            bootstrap4
+            columns={columns}
+            dataSource={data}
+            pagination={{ pageSize: 20 }}
+          />
+        )}
+        <Form>
+          <Modal
+            title="Edit Staff"
+            visible={isEditing}
+            okText="Save"
+            onCancel={() => {
+              resetEditing();
+            }}
+            onOk={() => {
+              if (data.id === editingStudent.id) {
+                return editingStudent;
+              }
+              onSubmitHandler(editingStudent);
+              console.log(editingStudent);
+              resetEditing();
+              return editingStudent;
+            }}
+          >
+            <Input
+              value={editingStudent?.id}
+              onChange={(e) => {
+                setEditingStudent((pre) => {
+                  return { ...pre, id: e.target.value };
+                });
+              }}
+            />
+            <Input
+              value={editingStudent?.first_name}
+              onChange={(e) => {
+                setEditingStudent((pre) => {
+                  return { ...pre, first_name: e.target.value };
+                });
+              }}
+            />
+            <Input
+              value={editingStudent?.last_name}
+              onChange={(e) => {
+                setEditingStudent((pre) => {
+                  return { ...pre, last_name: e.target.value };
+                });
+              }}
+            />
+            <Input
+              value={editingStudent?.staff_number}
+              onChange={(e) => {
+                setEditingStudent((pre) => {
+                  return { ...pre, staff_number: e.target.value };
+                });
+              }}
+            />
+            <Input
+              value={editingStudent?.roles}
+              onChange={(e) => {
+                setEditingStudent((pre) => {
+                  return { ...pre, roles: e.target.value };
+                });
+              }}
+            />
+            <Input
+              value={editingStudent?.phone_number}
+              onChange={(e) => {
+                setEditingStudent((pre) => {
+                  return { ...pre, phone_number: e.target.value };
+                });
+              }}
+            />
+            <Input
+              value={editingStudent?.email}
+              onChange={(e) => {
+                setEditingStudent((pre) => {
+                  return { ...pre, email: e.target.value };
+                });
+              }}
+            />
+          </Modal>
+        </Form>
+      </div>
+      <Button type="primary" size="lg" variant="brown" href={links.newStaff}>
+        Add Staff
+      </Button>
+    </div>
+  );
+};
+export default UsersForm;
