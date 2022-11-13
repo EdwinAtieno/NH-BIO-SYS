@@ -8,22 +8,23 @@ import 'antd/dist/antd.min.css';
 import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
-import UpdateRepair from './UpdateRepair';
+import UpdateEquipment from './UpdateEquipment';
+import { getEquipments } from '../../services/equipments';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
 import useAxios from '../../hooks/useAxios';
 import { links } from '../../utils/links';
-import { detailRepair } from '../../services/repairs';
 
-const RepairForm = () => {
+const EquipmentInfo = () => {
   const api = useAxios();
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [editingStudent, setEditingStudent] = useState(null);
 
   const { data, isLoading, isError, refetch, isFetching } = useQuery(
     ['id'],
-    () => detailRepair(api)
+    () => getEquipments(api)
   );
 
   useEffect(() => {
@@ -45,43 +46,60 @@ const RepairForm = () => {
 
   const columns = [
     {
-      dataIndex: 'id',
-      title: 'Id',
+      dataIndex: 'asset_number',
+      title: 'Asset Number',
     },
     {
-      dataIndex: 'equipment',
-      title: 'Equipment',
+      dataIndex: 'equipment_name',
+      title: 'Equipment Name',
       sorter: (record1, record2) => {
-        return record1.equipment > record2.equipment;
+        return record1.equipment_name > record2.equipment_name;
+      },
+    },
+    {
+      dataIndex: 'equipment_type',
+      title: 'Equipment Type',
+      sorter: (record1, record2) => {
+        return record1.equipment_type > record2.equipment_type;
+      },
+    },
+    {
+      dataIndex: 'equipment_model',
+      title: 'Equipment Model',
+      filters: [
+        { text: 'lease', value: 'lease' },
+        { text: 'outright purchase', value: 'outright purchase' },
+        { text: 'placement', value: 'placement' },
+      ],
+      onFilter: (value, record) => record.roles.indexOf(value) === 0,
+    },
+    {
+      dataIndex: 'status_remarks',
+      title: 'Status Remarks',
+    },
+    {
+      dataIndex: 'status',
+      title: 'Status',
+      filters: [
+        { text: 'active', value: 'active' },
+        { text: 'broken', value: 'broken' },
+        { text: 'repaired', value: 'repaired' },
+        { text: 'out of service', value: 'out of service' },
+        { text: 'in maintenance', value: 'in maintenance' },
+      ],
+      onFilter: (value, record) => record.roles.indexOf(value) === 0,
+    },
+    {
+      dataIndex: 'department',
+      title: 'Department',
+      sorter: (record1, record2) => {
+        return record1.department > record2.department;
       },
     },
     {
       dataIndex: 'supplier',
       title: 'Supplier',
-      sorter: (record1, record2) => {
-        return record1.supplier > record2.supplier;
-      },
-    },
-    {
-      dataIndex: 'repair_date',
-      title: 'Date of Repair',
-      sorter: (record1, record2) => {
-        return record1.repair_date > record2.repair_date;
-      },
-    },
-    {
-      dataIndex: 'repair_cost',
-      title: 'Repair Cost',
-      sorter: (record1, record2) => {
-        return record1.repair_cost > record2.repair_cost;
-      },
-    },
-    {
-      dataIndex: 'repair_description',
-      title: 'Remarks',
-      sorter: (record1, record2) => {
-        return record1.repair_description > record2.repair_description;
-      },
+      sorter: true,
     },
     {
       title: 'Actions',
@@ -149,7 +167,7 @@ const RepairForm = () => {
             <Modal.Title>Edit Employee</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <UpdateRepair theEmployee={editingStudent} />
+            <UpdateEquipment theEmployee={editingStudent} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={resetEditing}>
@@ -165,4 +183,4 @@ const RepairForm = () => {
   );
 };
 
-export default RepairForm;
+export default EquipmentInfo;

@@ -1,8 +1,12 @@
 import PrimaryLayout from '../layouts/PrimaryLayout';
-import EquipmentsData from '../features/transactions/EquipmentsData';
+import EquipmentInfo from '../features/Equipments/EquipmentInfo';
 
 const Equipments = () => {
-  return <EquipmentsData />;
+  return (
+    <PrimaryLayout>
+      <EquipmentInfo />
+    </PrimaryLayout>
+  );
 };
 
 export default Equipments;

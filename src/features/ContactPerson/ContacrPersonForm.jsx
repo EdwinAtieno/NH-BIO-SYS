@@ -3,16 +3,14 @@ import { Form } from 'react-bootstrap';
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { createRepair } from '../../services/repairs';
+import { createContactPerson } from '../../services/contact';
 import Button from '../../components/buttons/Button';
 import FormGroup from '../../components/forms/FormGroup';
 import FormSelect from '../../components/forms/FormSelect';
 import Riziki from '../../assets/svgs/Logos';
 import { links } from '../../utils/links';
-import useAxios from '../../hooks/useAxios';
 
-const AddRepair = () => {
-  const api = useAxios();
+const ContacrPersonForm = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const initialValues = {
@@ -27,26 +25,29 @@ const AddRepair = () => {
   };
   const [values, setValues] = useState(initialValues);
 
-  const { isLoading, mutate } = useMutation((data) => createRepair(api, data), {
-    onSuccess: () => {
-      toast.success('You have registered successfully.', {
-        autoClose: 8000,
-      });
-      navigate(links.signIn);
-    },
-    onError: (error) => {
-      if (error?.response?.status === 400) {
-        setErrors(error?.response?.data);
-        return;
-      }
+  const { isLoading, mutate } = useMutation(
+    (data) => createContactPerson(data),
+    {
+      onSuccess: () => {
+        toast.success('You have registered successfully.', {
+          autoClose: 8000,
+        });
+        navigate(links.signIn);
+      },
+      onError: (error) => {
+        if (error?.response?.status === 400) {
+          setErrors(error?.response?.data);
+          return;
+        }
 
-      if (error?.response?.status === 401) {
-        setErrors({ form: 'Invalid staff number or password' });
-        return;
-      }
-      toast.error('Oh snap! Something went wrong!');
-    },
-  });
+        if (error?.response?.status === 401) {
+          setErrors({ form: 'Invalid staff number or password' });
+          return;
+        }
+        toast.error('Oh snap! Something went wrong!');
+      },
+    }
+  );
   const roles = ['h.o.d', 'biomed', 'suppliers_admin'];
   const onChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -182,4 +183,4 @@ const AddRepair = () => {
     </div>
   );
 };
-export default AddRepair;
+export default ContacrPersonForm;

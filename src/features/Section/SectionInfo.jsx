@@ -2,28 +2,29 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { message, Space, Table } from 'antd';
+import { message, Space, Table, Tag } from 'antd';
 import { Modal, Button } from 'react-bootstrap';
 import 'antd/dist/antd.min.css';
 import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
-import UpdateRepair from './UpdateRepair';
+import { getSections } from '../../services/sections';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
 import useAxios from '../../hooks/useAxios';
 import { links } from '../../utils/links';
-import { detailRepair } from '../../services/repairs';
+import SectionUpdate from './SectionUpdate';
 
-const RepairForm = () => {
+const SectionInfo = () => {
   const api = useAxios();
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [editingStudent, setEditingStudent] = useState(null);
 
   const { data, isLoading, isError, refetch, isFetching } = useQuery(
     ['id'],
-    () => detailRepair(api)
+    () => getSections(api)
   );
 
   useEffect(() => {
@@ -49,38 +50,17 @@ const RepairForm = () => {
       title: 'Id',
     },
     {
-      dataIndex: 'equipment',
-      title: 'Equipment',
+      dataIndex: 'section_name',
+      title: 'Section Name',
       sorter: (record1, record2) => {
-        return record1.equipment > record2.equipment;
+        return record1.section_name > record2.section_name;
       },
     },
     {
-      dataIndex: 'supplier',
-      title: 'Supplier',
+      dataIndex: 'specialization',
+      title: 'Specialization',
       sorter: (record1, record2) => {
-        return record1.supplier > record2.supplier;
-      },
-    },
-    {
-      dataIndex: 'repair_date',
-      title: 'Date of Repair',
-      sorter: (record1, record2) => {
-        return record1.repair_date > record2.repair_date;
-      },
-    },
-    {
-      dataIndex: 'repair_cost',
-      title: 'Repair Cost',
-      sorter: (record1, record2) => {
-        return record1.repair_cost > record2.repair_cost;
-      },
-    },
-    {
-      dataIndex: 'repair_description',
-      title: 'Remarks',
-      sorter: (record1, record2) => {
-        return record1.repair_description > record2.repair_description;
+        return record1.specialization > record2.specialization;
       },
     },
     {
@@ -149,7 +129,7 @@ const RepairForm = () => {
             <Modal.Title>Edit Employee</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <UpdateRepair theEmployee={editingStudent} />
+            <SectionUpdate theEmployee={editingStudent} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={resetEditing}>
@@ -165,4 +145,4 @@ const RepairForm = () => {
   );
 };
 
-export default RepairForm;
+export default SectionInfo;

@@ -3,7 +3,6 @@ import { Form } from 'react-bootstrap';
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { userRegistration } from '../services/user';
 import Button from '../components/buttons/Button';
 import FormGroup from '../components/forms/FormGroup';
 import FormSelect from '../components/forms/FormSelect';

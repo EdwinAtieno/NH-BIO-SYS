@@ -40,7 +40,7 @@ const Sidebar = ({ show }) => {
             </li>
           </Link>
 
-          <Link to={links.agents}>
+          <Link to={links.suppliers}>
             <li>
               <FaUserPlus className="icon" />
               <span>Suppliers</span>
@@ -53,7 +53,7 @@ const Sidebar = ({ show }) => {
               <span>Equipment</span>
             </li>
           </Link>
-          <Link to={links.drivers}>
+          <Link to={links.departments}>
             <li>
               <FaHouseUser className="icon" />
               <span>Department</span>
@@ -70,7 +70,7 @@ const Sidebar = ({ show }) => {
           <Link to={links.myAccount}>
             <li>
               <BsFillGearFill className="icon" />
-              <span>My Account</span>
+              <span>My Profile</span>
             </li>
           </Link>
           <li>

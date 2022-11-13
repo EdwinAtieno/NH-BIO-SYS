@@ -2,28 +2,29 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { message, Space, Table } from 'antd';
+import { message, Space, Table, Tag } from 'antd';
 import { Modal, Button } from 'react-bootstrap';
 import 'antd/dist/antd.min.css';
 import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
-import UpdateRepair from './UpdateRepair';
+import { getDepartments } from '../../services/departments';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
 import useAxios from '../../hooks/useAxios';
 import { links } from '../../utils/links';
-import { detailRepair } from '../../services/repairs';
+import DepartmentUpdate from './DepartmentUpdate';
 
-const RepairForm = () => {
+const DepartmentInfo = () => {
   const api = useAxios();
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [editingStudent, setEditingStudent] = useState(null);
 
   const { data, isLoading, isError, refetch, isFetching } = useQuery(
     ['id'],
-    () => detailRepair(api)
+    () => getDepartments(api)
   );
 
   useEffect(() => {
@@ -45,43 +46,54 @@ const RepairForm = () => {
 
   const columns = [
     {
-      dataIndex: 'id',
-      title: 'Id',
-    },
-    {
-      dataIndex: 'equipment',
-      title: 'Equipment',
+      dataIndex: 'department_name',
+      title: 'Department Name',
       sorter: (record1, record2) => {
-        return record1.equipment > record2.equipment;
+        return record1.department_name > record2.department_name;
       },
     },
     {
-      dataIndex: 'supplier',
-      title: 'Supplier',
+      dataIndex: 'department_location',
+      title: 'Department Location',
       sorter: (record1, record2) => {
-        return record1.supplier > record2.supplier;
+        return record1.department_location > record2.department_location;
       },
     },
     {
-      dataIndex: 'repair_date',
-      title: 'Date of Repair',
+      dataIndex: 'building',
+      title: 'Building',
       sorter: (record1, record2) => {
-        return record1.repair_date > record2.repair_date;
+        return record1.building > record2.building;
       },
     },
     {
-      dataIndex: 'repair_cost',
-      title: 'Repair Cost',
+      dataIndex: 'sections',
+      title: 'Sections',
       sorter: (record1, record2) => {
-        return record1.repair_cost > record2.repair_cost;
+        return record1.sections > record2.sections;
       },
-    },
-    {
-      dataIndex: 'repair_description',
-      title: 'Remarks',
-      sorter: (record1, record2) => {
-        return record1.repair_description > record2.repair_description;
-      },
+      filters: [
+        { text: 'biomed', value: 'biomed' },
+        { text: 'h.o.d', value: 'h.o.d' },
+        { text: 'admin', value: 'admin' },
+        { text: 'supplier_admin', value: 'supplier_admin' },
+      ],
+      onFilter: (value, record) => record.sections.indexOf(value) === 0,
+      render: (_, { sections }) => (
+        <>
+          {sections.map((section) => {
+            let color = section.length > 5 ? 'geekblue' : 'green';
+            if (section === 'loser') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={section}>
+                {section.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
     },
     {
       title: 'Actions',
@@ -149,7 +161,7 @@ const RepairForm = () => {
             <Modal.Title>Edit Employee</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <UpdateRepair theEmployee={editingStudent} />
+            <DepartmentUpdate theEmployee={editingStudent} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={resetEditing}>
@@ -165,4 +177,4 @@ const RepairForm = () => {
   );
 };
 
-export default RepairForm;
+export default DepartmentInfo;

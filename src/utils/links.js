@@ -12,11 +12,10 @@ export const links = {
   categories: '/categories',
   subCategories: '/sub-categories',
   shops: '/shops',
-  deliveries: '/deliveries',
-  orders: '/orders',
-  regions: '/regions',
   myAccount: '/my-account',
   staffs: '/staffs',
+  departments: '/departments',
+  suppliers: '/suppliers',
   newStaff: '/add/staff',
   signUp: '/sign-up',
 };

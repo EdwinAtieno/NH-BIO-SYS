@@ -14,6 +14,8 @@ const BaseRouter = () => {
   const Staffs = React.lazy(() => import('../pages/Staffs'));
   const Equipments = React.lazy(() => import('../pages/Equipments'));
   const NewStaff = React.lazy(() => import('../pages/NewStaff'));
+  const Departments = React.lazy(() => import('../pages/Departments'));
+  const Suppliers = React.lazy(() => import('../pages/Suppliers'));
 
   return (
     <Suspense fallback={<FullPageLoader />}>
@@ -23,6 +25,8 @@ const BaseRouter = () => {
           <Route path={links.repairs} element={<Repairs />} />
           <Route path={links.staffs} element={<Staffs />} />
           <Route path={links.equipments} element={<Equipments />} />
+          <Route path={links.departments} element={<Departments />} />
+          <Route path={links.suppliers} element={<Suppliers />} />
           <Route path={links.newStaff} element={<NewStaff />} />
         </Route>
         <Route path={links.signUp} element={<SignUp />} />

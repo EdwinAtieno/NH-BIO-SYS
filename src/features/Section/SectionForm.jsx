@@ -3,16 +3,14 @@ import { Form } from 'react-bootstrap';
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { createRepair } from '../../services/repairs';
+import { createSection } from '../../services/sections';
 import Button from '../../components/buttons/Button';
 import FormGroup from '../../components/forms/FormGroup';
 import FormSelect from '../../components/forms/FormSelect';
 import Riziki from '../../assets/svgs/Logos';
 import { links } from '../../utils/links';
-import useAxios from '../../hooks/useAxios';
 
-const AddRepair = () => {
-  const api = useAxios();
+const SectionForm = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const initialValues = {
@@ -27,7 +25,7 @@ const AddRepair = () => {
   };
   const [values, setValues] = useState(initialValues);
 
-  const { isLoading, mutate } = useMutation((data) => createRepair(api, data), {
+  const { isLoading, mutate } = useMutation((data) => createSection(data), {
     onSuccess: () => {
       toast.success('You have registered successfully.', {
         autoClose: 8000,
@@ -182,4 +180,4 @@ const AddRepair = () => {
     </div>
   );
 };
-export default AddRepair;
+export default SectionForm;

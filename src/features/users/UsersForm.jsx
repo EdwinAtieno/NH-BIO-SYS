@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { message, Space, Table, Tag } from 'antd';
 import { Modal, Button } from 'react-bootstrap';
 import 'antd/dist/antd.min.css';
-import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
+import { FilePdfOutlined } from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
 import EditForm from './EditForm';
@@ -13,8 +13,6 @@ import { getAllUser } from '../../services/users';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
 import useAxios from '../../hooks/useAxios';
-import '../repairs/repair.scss';
-import { links } from '../../utils/links';
 
 const UsersForm = () => {
   const api = useAxios();
@@ -37,10 +35,7 @@ const UsersForm = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-  const onEditStudent = (record) => {
-    setIsEditing(true);
-    setEditingStudent({ ...record });
-  };
+
   const resetEditing = () => {
     setIsEditing(false);
   };
@@ -118,15 +113,6 @@ const UsersForm = () => {
     },
     {
       title: 'Actions',
-      render: (record) => {
-        return (
-          <EditOutlined
-            onClick={() => {
-              onEditStudent(record);
-            }}
-          />
-        );
-      },
     },
   ];
 
@@ -148,7 +134,7 @@ const UsersForm = () => {
   return (
     <div className="listContainer">
       <div className="listTitle">
-        <em> Staffs Present and Their Roles</em>
+        <b> Staffs Present and Their Roles</b>
       </div>
       <Space style={{ float: 'right' }}>
         <CSVLink
@@ -191,9 +177,6 @@ const UsersForm = () => {
           </Modal.Footer>
         </Modal>
       </div>
-      <Button type="primary" size="lg" variant="brown" href={links.newStaff}>
-        Add Staff
-      </Button>
     </div>
   );
 };

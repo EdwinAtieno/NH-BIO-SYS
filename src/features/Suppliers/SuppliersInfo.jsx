@@ -8,22 +8,23 @@ import 'antd/dist/antd.min.css';
 import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
-import UpdateRepair from './UpdateRepair';
+import SupplierUpdate from './SupplierUpdate';
+import { getSeppliers } from '../../services/suppliers';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
 import useAxios from '../../hooks/useAxios';
 import { links } from '../../utils/links';
-import { detailRepair } from '../../services/repairs';
 
-const RepairForm = () => {
+const SuppliersInfo = () => {
   const api = useAxios();
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [editingStudent, setEditingStudent] = useState(null);
 
   const { data, isLoading, isError, refetch, isFetching } = useQuery(
     ['id'],
-    () => detailRepair(api)
+    () => getSeppliers(api)
   );
 
   useEffect(() => {
@@ -49,39 +50,51 @@ const RepairForm = () => {
       title: 'Id',
     },
     {
-      dataIndex: 'equipment',
-      title: 'Equipment',
+      dataIndex: 'supplier_name',
+      title: 'Supplier Name',
       sorter: (record1, record2) => {
-        return record1.equipment > record2.equipment;
+        return record1.supplier_name > record2.supplier_name;
       },
     },
     {
-      dataIndex: 'supplier',
-      title: 'Supplier',
+      dataIndex: 'supplier_address',
+      title: 'Supplier Address',
       sorter: (record1, record2) => {
-        return record1.supplier > record2.supplier;
+        return record1.supplier_address > record2.supplier_address;
       },
     },
     {
-      dataIndex: 'repair_date',
-      title: 'Date of Repair',
+      dataIndex: 'supplier_contact',
+      title: 'Contact',
       sorter: (record1, record2) => {
-        return record1.repair_date > record2.repair_date;
+        return record1.supplier_contact > record2.supplier_contact;
       },
     },
     {
-      dataIndex: 'repair_cost',
-      title: 'Repair Cost',
+      dataIndex: 'contact_person',
+      title: 'Contact Person',
       sorter: (record1, record2) => {
-        return record1.repair_cost > record2.repair_cost;
+        return record1.contact_person > record2.contact_person;
       },
     },
     {
-      dataIndex: 'repair_description',
-      title: 'Remarks',
+      dataIndex: 'supplier_email',
+      title: 'Email',
       sorter: (record1, record2) => {
-        return record1.repair_description > record2.repair_description;
+        return record1.supplier_email > record2.supplier_email;
       },
+    },
+    {
+      dataIndex: 'supplier_website',
+      title: 'Website',
+      sorter: (record1, record2) => {
+        return record1.supplier_website > record2.supplier_website;
+      },
+    },
+    {
+      dataIndex: 'supplier_remarks',
+      title: 'More Info',
+      sorter: true,
     },
     {
       title: 'Actions',
@@ -149,7 +162,7 @@ const RepairForm = () => {
             <Modal.Title>Edit Employee</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <UpdateRepair theEmployee={editingStudent} />
+            <SupplierUpdate theEmployee={editingStudent} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={resetEditing}>
@@ -164,5 +177,4 @@ const RepairForm = () => {
     </div>
   );
 };
-
-export default RepairForm;
+export default SuppliersInfo;
