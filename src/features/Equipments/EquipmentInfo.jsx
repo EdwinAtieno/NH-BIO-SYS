@@ -1,13 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { message, Space, Table } from 'antd';
 import { Modal, Button } from 'react-bootstrap';
 import 'antd/dist/antd.min.css';
-import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  FilePdfOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
+import { toast } from 'react-toastify';
 import UpdateEquipment from './UpdateEquipment';
 import { getEquipments } from '../../services/equipments';
 import FullPageLoader from '../../components/spinners/FullPageLoader';

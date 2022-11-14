@@ -5,27 +5,33 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { updateUser } from '../../services/users';
 import useAxios from '../../hooks/useAxios';
+import useAuth from '../../hooks/useAuth';
 
 const EditForm = ({ theEmployee }) => {
   const { id } = theEmployee;
+  const { user } = useAuth();
   const api = useAxios();
   const initialValues = {
+    id: theEmployee.id,
     email: theEmployee.email,
     first_name: theEmployee.first_name,
     last_name: theEmployee.last_name,
-    roles: theEmployee.roles.map((role) => role.name),
     middle_name: theEmployee.middle_name,
     staff_number: theEmployee.staff_number,
     phone_number: theEmployee.phone_number,
   };
+
   const [values, setValues] = useState(initialValues);
-  const { mutate } = useMutation((data) => updateUser(api, id, data), {
-    onSuccess: () => {
-      toast.success('You have registered successfully.', {
-        autoClose: 8000,
-      });
-    },
-  });
+  const { mutate } = useMutation(
+    (data) => updateUser(api, user?.user_id, data),
+    {
+      onSuccess: () => {
+        toast.success('Updated successfully.', {
+          autoClose: 8000,
+        });
+      },
+    }
+  );
   const onChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -98,15 +104,6 @@ const EditForm = ({ theEmployee }) => {
           placeholder="Address"
           name="phone_number"
           value={values.phone_number}
-          onChange={onChange}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Control
-          type="text"
-          placeholder="Phone"
-          name="roles"
-          value={values.roles}
           onChange={onChange}
         />
       </Form.Group>

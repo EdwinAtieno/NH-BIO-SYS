@@ -41,7 +41,7 @@ const LoginForm = () => {
   const { isLoading, mutate } = useMutation(signInUser, {
     onSuccess: (data) => {
       signIn(data);
-      navigate(links.shops);
+      navigate(links.myAccount);
     },
 
     onError: (error) => {

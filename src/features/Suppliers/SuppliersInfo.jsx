@@ -1,15 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { message, Space, Table } from 'antd';
 import { Modal, Button } from 'react-bootstrap';
 import 'antd/dist/antd.min.css';
-import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  FilePdfOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
+import { toast } from 'react-toastify';
 import SupplierUpdate from './SupplierUpdate';
-import { getSeppliers } from '../../services/suppliers';
+import { deleteSupplier, getSeppliers } from '../../services/suppliers';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
 import useAxios from '../../hooks/useAxios';
@@ -26,10 +31,16 @@ const SuppliersInfo = () => {
     ['id'],
     () => getSeppliers(api)
   );
-
   useEffect(() => {
     refetch();
   }, []);
+  const { mutate } = useMutation(() => deleteSupplier(api, editingStudent.id), {
+    onSuccess: () => {
+      toast.success('You have deleted successfully.', {
+        autoClose: 8000,
+      });
+    },
+  });
 
   const componentRef = useRef();
 
@@ -42,6 +53,10 @@ const SuppliersInfo = () => {
   };
   const resetEditing = () => {
     setIsEditing(false);
+  };
+  const onDelete = (record) => {
+    setEditingStudent({ ...record });
+    mutate(isEditing);
   };
 
   const columns = [
@@ -96,11 +111,19 @@ const SuppliersInfo = () => {
       title: 'Actions',
       render: (record) => {
         return (
-          <EditOutlined
-            onClick={() => {
-              onEditStudent(record);
-            }}
-          />
+          <>
+            <EditOutlined
+              onClick={() => {
+                onEditStudent(record);
+              }}
+            />
+            <DeleteOutlined
+              onClick={() => {
+                onDelete(record);
+              }}
+              style={{ color: 'red', marginLeft: 12 }}
+            />
+          </>
         );
       },
     },

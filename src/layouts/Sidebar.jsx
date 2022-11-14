@@ -25,13 +25,6 @@ const Sidebar = ({ show }) => {
       </div>
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
-          <Link to={links.dashboard}>
-            <li>
-              <RiDashboardFill className="icon" />
-              <span>Dashboard</span>
-            </li>
-          </Link>
           <p className="title">USERS</p>
           <Link to={links.staffs}>
             <li>

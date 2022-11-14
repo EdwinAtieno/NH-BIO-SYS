@@ -38,10 +38,10 @@ const ForgotPasswordForm = () => {
   return (
     <div className="auth-form__wrapper">
       <Riziki />
-      <h5 className="text-muted">Admin Panel</h5>
+      <h5 className="text-muted">User Panel</h5>
       <h3>Forgot Your Pin?</h3>
       <p className="text-muted">
-        Enter your phone number below and we will send you a new pin.
+        Enter your phone number below and we will send you a new password.
       </p>
       <Form className="auth-form__form" onSubmit={onSubmitHandler}>
         <FormGroup

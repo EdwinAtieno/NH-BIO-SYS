@@ -11,7 +11,7 @@ const Dashboard = () => {
       <section className="dashboard-page__container">
         <div className="mt-5 px-1 mx-auto">
           <div className="latest-transactions">
-            <h5 className="text-muted">Latest Transactions</h5>
+            <h5 className="text-muted">Latest Updates and Track</h5>
           </div>
         </div>
       </section>

@@ -47,10 +47,7 @@ const ContactPInfo = () => {
     }
   );
   const componentRef = useRef();
-  const onDelete = (record) => {
-    setEditingStudent({ ...record });
-    mutate(isEditing);
-  };
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
@@ -60,6 +57,10 @@ const ContactPInfo = () => {
   };
   const resetEditing = () => {
     setIsEditing(false);
+  };
+  const onDelete = (record) => {
+    setEditingStudent({ ...record });
+    mutate(isEditing);
   };
 
   const columns = [
@@ -105,7 +106,9 @@ const ContactPInfo = () => {
               }}
             />
             <DeleteOutlined
-              onClick={onDelete(record)}
+              onClick={() => {
+                onDelete(record);
+              }}
               style={{ color: 'red', marginLeft: 12 }}
             />
           </>
@@ -113,7 +116,6 @@ const ContactPInfo = () => {
       },
     },
   ];
-
   if (isLoading || isFetching) {
     return (
       <div className="centered">
