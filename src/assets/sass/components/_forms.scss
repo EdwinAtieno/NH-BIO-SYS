@@ -49,7 +49,7 @@
   margin: 0.5rem 0;
   label {
     font-size: 0.9rem;
-    color: $dark-gray;
+    color: sandybrown;
     font-weight: bold;
   }
 
@@ -61,4 +61,10 @@
       margin-left: 0.5rem;
     }
   }
+}
+
+.Button {
+  width: 100%;
+  color: brown;
+  margin: 1rem 0;
 }

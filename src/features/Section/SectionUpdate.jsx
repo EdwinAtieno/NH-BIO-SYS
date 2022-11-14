@@ -17,7 +17,7 @@ const SectionUpdate = ({ theEmployee }) => {
 
   const { mutate } = useMutation((data) => updateSection(api, id, data), {
     onSuccess: () => {
-      toast.success('You have registered successfully.', {
+      toast.success('Updated successfully.', {
         autoClose: 8000,
       });
     },
@@ -60,7 +60,7 @@ const SectionUpdate = ({ theEmployee }) => {
         />
       </Form.Group>
       <Button variant="success" type="submit" block>
-        Edit Employee
+        Update Section
       </Button>
     </Form>
   );

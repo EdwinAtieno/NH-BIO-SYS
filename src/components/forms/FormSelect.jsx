@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const FormSelect = ({
   options,
+  multiple,
   label,
   name,
   defaultValue,
@@ -19,6 +20,7 @@ const FormSelect = ({
     <Form.Select
       onChange={onChange}
       name={name}
+      multiple={multiple}
       required={required}
       disabled={disabled}
       isInvalid={error}
@@ -65,11 +67,13 @@ FormSelect.propTypes = {
   disabled: PropTypes.bool,
   extraInfo: PropTypes.string,
   description: PropTypes.string,
+  multiple: PropTypes.bool,
 };
 
 FormSelect.defaultProps = {
   size: 'lg',
   required: false,
+  multiple: false,
   error: undefined,
   disabled: false,
   defaultValue: '',

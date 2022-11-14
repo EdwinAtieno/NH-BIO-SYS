@@ -42,10 +42,6 @@ const UsersForm = () => {
 
   const columns = [
     {
-      dataIndex: 'id',
-      title: 'Id',
-    },
-    {
       dataIndex: 'first_name',
       title: 'First Name',
       sorter: (record1, record2) => {

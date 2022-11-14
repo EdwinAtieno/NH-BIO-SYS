@@ -1,36 +1,34 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useMutation } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createSupplier } from '../../services/suppliers';
 import Button from '../../components/buttons/Button';
 import FormGroup from '../../components/forms/FormGroup';
-import FormSelect from '../../components/forms/FormSelect';
-import Riziki from '../../assets/svgs/Logos';
 import { links } from '../../utils/links';
+import ContactPersons from './ContactPersons';
 
 const SupplierForm = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const initialValues = {
-    email: '',
-    first_name: '',
-    last_name: '',
-    role: '',
-    middle_name: '',
-    staff_number: '',
-    password: '',
-    phone_number: '',
+    supplier_name: '',
+    supplier_address: '',
+    supplier_contact: '',
+    supplier_email: '',
+    supplier_website: '',
+    supplier_remarks: '',
+    contact_person: '',
   };
   const [values, setValues] = useState(initialValues);
 
   const { isLoading, mutate } = useMutation((data) => createSupplier(data), {
     onSuccess: () => {
-      toast.success('You have registered successfully.', {
+      toast.success('Supplier registered successfully.', {
         autoClose: 8000,
       });
-      navigate(links.signIn);
+      navigate(links.suppliers);
     },
     onError: (error) => {
       if (error?.response?.status === 400) {
@@ -45,7 +43,6 @@ const SupplierForm = () => {
       toast.error('Oh snap! Something went wrong!');
     },
   });
-  const roles = ['h.o.d', 'biomed', 'suppliers_admin'];
   const onChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -56,128 +53,101 @@ const SupplierForm = () => {
   };
 
   return (
-    <div className="auth-form__wrapper">
-      <Riziki />
-      <h5>New user?</h5>
-      <p className="text-muted">
-        Enter your information below and we will register you as a new user.
-      </p>
-      <Form className="auth-form__form" onSubmit={onSubmitHandler}>
-        <div className="row">
-          <div className="col-md-6">
-            <FormGroup
-              type="text"
-              name="first_name"
-              label="First Name"
-              value={values.first_name}
-              onChange={onChange}
-              placeholder="first name"
-              error={errors?.first_name}
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <FormGroup
-              type="text"
-              name="last_name"
-              label="Last Name"
-              value={values.last_name}
-              onChange={onChange}
-              placeholder="last name"
-              error={errors?.last_name}
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <FormGroup
-              type="text"
-              name="middle_name"
-              label="Middle Name"
-              value={values.middle_name}
-              onChange={onChange}
-              placeholder="middle name"
-              error={errors?.middle_name}
-            />
-          </div>
-          <div className="col-md-6">
-            <FormGroup
-              type="number"
-              name="phone_number"
-              label="Phone Number"
-              value={values.phone_number}
-              onChange={onChange}
-              placeholder="254 xxx xxx xxx"
-              error={errors?.phone_number}
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <FormGroup
-              type="email"
-              name="email"
-              label="Email"
-              value={values.email}
-              onChange={onChange}
-              placeholder="email@xyz.com"
-              error={errors?.email}
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <FormGroup
-              type="text"
-              name="staff_number"
-              label="Staff Number"
-              value={values.staff_number}
-              onChange={onChange}
-              placeholder="N xxx xxx"
-              error={errors?.staff_number}
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <FormSelect
-              name="role"
-              label="Role"
-              value={values.role}
-              onChange={onChange}
-              options={roles.map((type) => {
-                return { label: type, value: type };
-              })}
-              description="Select Role"
-              error={errors?.role}
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <FormGroup
-              type="password"
-              name="password"
-              label="Password"
-              value={values.password}
-              onChange={onChange}
-              placeholder="xxxxxxxxx"
-              error={errors?.password}
-              required
-            />
-          </div>
+    <Form className="auth-form__form" onSubmit={onSubmitHandler}>
+      <div className="row">
+        <div className="col-md-6">
+          <FormGroup
+            type="text"
+            name="supplier_name"
+            label="Full Names"
+            value={values.supplier_name}
+            onChange={onChange}
+            placeholder="full names"
+            error={errors?.supplier_name}
+            required
+          />
         </div>
-        <div className="centered">
-          <Button
-            position="center"
-            variant="green"
-            type="submit"
-            isLoading={isLoading}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Creating User...' : 'Create User'}
-          </Button>
+        <div className="col-md-6">
+          <FormGroup
+            type="text"
+            name="supplier_address"
+            label="Address"
+            value={values.supplier_address}
+            onChange={onChange}
+            placeholder="Address"
+            error={errors?.supplier_address}
+            required
+          />
         </div>
-      </Form>
-      <div className="other-options">
-        Already have an account? <Link to={links.signIn}>Sign In</Link>
+        <div className="col-md-6">
+          <FormGroup
+            type="text"
+            name="supplier_website"
+            label="Website"
+            value={values.supplier_website}
+            onChange={onChange}
+            placeholder="www.xyz.com"
+            error={errors?.supplier_website}
+          />
+        </div>
+        <div className="col-md-6">
+          <FormGroup
+            type="number"
+            name="supplier_contact"
+            label="Phone Number"
+            value={values.supplier_contact}
+            onChange={onChange}
+            placeholder="254 xxx xxx xxx"
+            error={errors?.supplier_contact}
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <FormGroup
+            type="email"
+            name="supplier_email"
+            label="Email"
+            value={values.supplier_email}
+            onChange={onChange}
+            placeholder="email@xyz.com"
+            error={errors?.supplier_email}
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <FormGroup
+            as="textarea"
+            rows={3}
+            name="supplier_remarks"
+            label="More Information"
+            value={values.supplier_remarks}
+            onChange={onChange}
+            placeholder="More information about the supplier"
+            error={errors?.supplier_remarks}
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <ContactPersons
+            values={values}
+            setValues={setValues}
+            errors={errors}
+            setErrors={setErrors}
+          />
+        </div>
       </div>
-    </div>
+      <div className="centered">
+        <Button
+          position="center"
+          variant="green"
+          type="submit"
+          isLoading={isLoading}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Creating User...' : 'Create User'}
+        </Button>
+      </div>
+    </Form>
   );
 };
 export default SupplierForm;

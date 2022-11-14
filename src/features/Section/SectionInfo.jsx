@@ -46,10 +46,6 @@ const SectionInfo = () => {
 
   const columns = [
     {
-      dataIndex: 'id',
-      title: 'Id',
-    },
-    {
       dataIndex: 'section_name',
       title: 'Section Name',
       sorter: (record1, record2) => {
@@ -95,11 +91,11 @@ const SectionInfo = () => {
   return (
     <div className="listContainer">
       <div className="listTitle">
-        <em> Staffs Present and Their Roles</em>
+        <em> Sections in the department</em>
       </div>
       <Space style={{ float: 'right' }}>
         <CSVLink
-          filename="Staff_Table.csv"
+          filename="Section_Table.csv"
           data={data}
           className="btn btn-primary"
           onClick={() => {

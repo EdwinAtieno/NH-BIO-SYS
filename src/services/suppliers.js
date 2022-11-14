@@ -4,7 +4,7 @@ export const getSupplier = async (api, supplierId) => {
 };
 
 export const createSupplier = async (api, values) => {
-  const response = await api.get(`/suppliers/`, values);
+  const response = await api.post(`/suppliers/`, values);
   return response.data;
 };
 

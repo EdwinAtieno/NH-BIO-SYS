@@ -4,7 +4,7 @@ export const getEquipment = async (api, equipmentId) => {
 };
 
 export const createEquipment = async (api, values) => {
-  const response = await api.get(`/equipments/`, values);
+  const response = await api.post(`/equipments/`, values);
   return response.data;
 };
 

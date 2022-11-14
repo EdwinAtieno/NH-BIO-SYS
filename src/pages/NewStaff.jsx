@@ -16,7 +16,7 @@ const NextStaff = () => {
   const navigate = useNavigate();
   const api = useAxios();
   const { user } = useAuth();
-  const [errors, setErrors] = useState({});
+  const [errors] = useState({});
   const initialValues = {
     email: '',
     first_name: '',

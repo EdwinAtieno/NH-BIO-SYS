@@ -46,10 +46,6 @@ const SuppliersInfo = () => {
 
   const columns = [
     {
-      dataIndex: 'id',
-      title: 'Id',
-    },
-    {
       dataIndex: 'supplier_name',
       title: 'Supplier Name',
       sorter: (record1, record2) => {
@@ -128,11 +124,11 @@ const SuppliersInfo = () => {
   return (
     <div className="listContainer">
       <div className="listTitle">
-        <em> Staffs Present and Their Roles</em>
+        <em> Supplier info</em>
       </div>
       <Space style={{ float: 'right' }}>
         <CSVLink
-          filename="Staff_Table.csv"
+          filename="Supplier_Table.csv"
           data={data}
           className="btn btn-primary"
           onClick={() => {

@@ -1,17 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
+import { Form } from 'react-bootstrap';
 import { useState } from 'react';
-import useAxios from '../../hooks/useAxios';
-import { getContactPersons } from '../../services/contact';
-import FormSelect from '../../components/forms/FormSelect';
 import ErrorMessage from '../../components/errors/ErrorMessage';
+import FormSelect from '../../components/forms/FormSelect';
+import useAxios from '../../hooks/useAxios';
+import FormGroup from '../../components/forms/FormGroup';
+import { getDepartments } from '../../services/departments';
 
-const ContactPersons = ({ errors, setErrors, values, setValues }) => {
+const SectionSelect = ({ errors, setErrors, values, setValues }) => {
   const [shops, setShops] = useState([]);
   const api = useAxios();
   const { isLoading, refetch } = useQuery(
-    ['contactPerson'],
-    () => getContactPersons(api),
+    ['shops'],
+    () => getDepartments(api),
     {
       onSuccess: (data) => {
         const errorState = { ...errors };
@@ -30,41 +32,39 @@ const ContactPersons = ({ errors, setErrors, values, setValues }) => {
       {' '}
       {shops && (
         <FormSelect
-          type="text"
+          as="select"
           required
-          name="contact_person"
-          label="Contact Person"
-          value={values.contact_person}
-          onChange={(e) =>
-            setValues({ ...values, contact_person: e.target.value.split(',') })
-          }
-          error={errors?.contact_person_name}
+          name="department"
+          label="department"
+          value={values.department}
+          onChange={(e) => setValues({ ...values, sections: e.target.value })}
+          error={errors?.department_name}
           options={shops.map((shop) => {
             return {
-              label: shop?.contact_person_name,
-              value: shop?.contact_person_name,
+              label: shop?.department_name,
+              value: shop?.department_name,
             };
           })}
-          description="Choose Contact Person"
+          description="Choose department"
         />
       )}
       {isLoading && <div>Loading your shops...</div>}
-      {errors?.contact_person_name && (
+      {errors?.section_name && (
         <ErrorMessage
           withRetry
           retryAction={refetch}
-          message="Failed to get info please try again"
+          message="Failed to get section please try again"
         />
       )}
     </div>
   );
 };
 
-ContactPersons.propTypes = {
+SectionSelect.propTypes = {
   errors: PropTypes.func.isRequired,
   values: PropTypes.func.isRequired,
   setValues: PropTypes.func.isRequired,
   setErrors: PropTypes.func.isRequired,
 };
 
-export default ContactPersons;
+export default SectionSelect;

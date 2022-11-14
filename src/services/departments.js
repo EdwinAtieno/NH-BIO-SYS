@@ -4,7 +4,7 @@ export const getDepartment = async (api, DepartmentId) => {
 };
 
 export const createDepartment = async (api, values) => {
-  const response = await api.get(`/departments/`, values);
+  const response = await api.post(`/departments/`, values);
   return response.data;
 };
 

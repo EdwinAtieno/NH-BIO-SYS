@@ -133,11 +133,11 @@ const EquipmentInfo = () => {
   return (
     <div className="listContainer">
       <div className="listTitle">
-        <em> Staffs Present and Their Roles</em>
+        <em> Equipments in the department</em>
       </div>
       <Space style={{ float: 'right' }}>
         <CSVLink
-          filename="Staff_Table.csv"
+          filename="Equipment_Table.csv"
           data={data}
           className="btn btn-primary"
           onClick={() => {

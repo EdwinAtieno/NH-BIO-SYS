@@ -4,7 +4,7 @@ export const getSection = async (api, contactPId) => {
 };
 
 export const createSection = async (api, values) => {
-  const response = await api.get(`/sections/`, values);
+  const response = await api.post(`/sections/`, values);
   return response.data;
 };
 

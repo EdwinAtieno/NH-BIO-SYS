@@ -1,14 +1,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { message, Space, Table } from 'antd';
 import { Modal, Button } from 'react-bootstrap';
 import 'antd/dist/antd.min.css';
-import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  FilePdfOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
-import { getContactPersons } from '../../services/contact';
+import { toast } from 'react-toastify';
+import { deleteContactPerson, getContactPersons } from '../../services/contact';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
 import useAxios from '../../hooks/useAxios';
@@ -31,8 +36,21 @@ const ContactPInfo = () => {
     refetch();
   }, []);
 
+  const { mutate } = useMutation(
+    () => deleteContactPerson(api, editingStudent.id),
+    {
+      onSuccess: () => {
+        toast.success('You have deleted successfully.', {
+          autoClose: 8000,
+        });
+      },
+    }
+  );
   const componentRef = useRef();
-
+  const onDelete = (record) => {
+    setEditingStudent({ ...record });
+    mutate(isEditing);
+  };
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
@@ -45,10 +63,6 @@ const ContactPInfo = () => {
   };
 
   const columns = [
-    {
-      dataIndex: 'id',
-      title: 'Id',
-    },
     {
       dataIndex: 'contact_person_name',
       title: 'Full Name',
@@ -84,11 +98,17 @@ const ContactPInfo = () => {
       title: 'Actions',
       render: (record) => {
         return (
-          <EditOutlined
-            onClick={() => {
-              onEditStudent(record);
-            }}
-          />
+          <>
+            <EditOutlined
+              onClick={() => {
+                onEditStudent(record);
+              }}
+            />
+            <DeleteOutlined
+              onClick={onDelete(record)}
+              style={{ color: 'red', marginLeft: 12 }}
+            />
+          </>
         );
       },
     },
@@ -112,11 +132,11 @@ const ContactPInfo = () => {
   return (
     <div className="listContainer">
       <div className="listTitle">
-        <em> Staffs Present and Their Roles</em>
+        <em> List of Contact Persons</em>
       </div>
       <Space style={{ float: 'right' }}>
         <CSVLink
-          filename="Staff_Table.csv"
+          filename="Contact_Person_Table.csv"
           data={data}
           className="btn btn-primary"
           onClick={() => {

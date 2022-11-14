@@ -4,7 +4,7 @@ export const getContactPerson = async (api, contactPId) => {
 };
 
 export const createContactPerson = async (api, values) => {
-  const response = await api.get(`/contactpersons/`, values);
+  const response = await api.post(`/contactpersons/`, values);
   return response.data;
 };
 
