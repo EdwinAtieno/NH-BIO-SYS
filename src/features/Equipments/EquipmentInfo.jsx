@@ -76,7 +76,7 @@ const EquipmentInfo = () => {
         { text: 'outright purchase', value: 'outright purchase' },
         { text: 'placement', value: 'placement' },
       ],
-      onFilter: (value, record) => record.roles.indexOf(value) === 0,
+      onFilter: (value, record) => record.equipment_model.indexOf(value) === 0,
     },
     {
       dataIndex: 'status_remarks',
@@ -92,7 +92,7 @@ const EquipmentInfo = () => {
         { text: 'out of service', value: 'out of service' },
         { text: 'in maintenance', value: 'in maintenance' },
       ],
-      onFilter: (value, record) => record.roles.indexOf(value) === 0,
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
     {
       dataIndex: 'department',

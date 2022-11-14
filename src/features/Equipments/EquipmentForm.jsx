@@ -22,6 +22,7 @@ const EquipmentForm = () => {
     equipment_model: '',
     description: '',
     status: '',
+    transfer_to: '',
     status_remarks: '',
     department: '',
     supplier: '',
@@ -165,6 +166,18 @@ const EquipmentForm = () => {
             })}
             description="Select Status"
             error={errors?.status}
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <FormGroup
+            type="text"
+            name="transfer_to"
+            label="Transfer To"
+            value={values.transfer_to}
+            onChange={onChange}
+            placeholder="Transfer H.O.D"
+            error={errors?.transfer_to}
             required
           />
         </div>

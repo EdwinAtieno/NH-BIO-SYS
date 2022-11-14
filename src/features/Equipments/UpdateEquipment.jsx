@@ -67,7 +67,7 @@ const UpdateEquipment = ({ theEmployee }) => {
       <Form.Group>
         <Form.Control
           type="text"
-          placeholder="Transfer"
+          placeholder="Staff Number (N******)"
           name="transfer_to"
           value={values.transfer_to}
           onChange={onChange}
