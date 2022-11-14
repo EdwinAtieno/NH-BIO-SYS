@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { RiDashboardFill, RiUser3Fill } from 'react-icons/ri';
+import { RiUser3Fill } from 'react-icons/ri';
 import { FaUserPlus, FaTools, FaHouseUser } from 'react-icons/fa';
 import { BsFillGearFill, BsTools } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
@@ -10,7 +10,6 @@ import useAuth from '../hooks/useAuth';
 
 const Sidebar = ({ show }) => {
   const { logOut } = useAuth();
-
   return (
     <div
       className={`sidebar
@@ -25,7 +24,7 @@ const Sidebar = ({ show }) => {
       </div>
       <div className="center">
         <ul>
-          <p className="title">USERS</p>
+          <p className="title">MAIN</p>
           <Link to={links.staffs}>
             <li>
               <RiUser3Fill className="icon" />

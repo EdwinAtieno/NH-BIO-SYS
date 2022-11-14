@@ -12,6 +12,7 @@ const UpdateEquipment = ({ theEmployee }) => {
     asset_number: theEmployee.asset_number,
     status: theEmployee.status,
     status_remarks: theEmployee.status_remarks,
+    transfer_to: theEmployee.transfer_to,
   };
   const [values, setValues] = useState(initialValues);
 
@@ -60,6 +61,15 @@ const UpdateEquipment = ({ theEmployee }) => {
           placeholder="Remarks"
           name="asset_number"
           value={values.asset_number}
+          onChange={onChange}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Control
+          type="text"
+          placeholder="Transfer"
+          name="transfer_to"
+          value={values.transfer_to}
           onChange={onChange}
         />
       </Form.Group>

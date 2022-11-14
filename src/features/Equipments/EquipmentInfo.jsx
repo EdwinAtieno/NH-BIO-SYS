@@ -107,6 +107,11 @@ const EquipmentInfo = () => {
       sorter: true,
     },
     {
+      dataIndex: 'transfer_to',
+      title: 'Transfer To',
+      sorter: true,
+    },
+    {
       title: 'Actions',
       render: (record) => {
         return (
