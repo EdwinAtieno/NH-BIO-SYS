@@ -5,5 +5,5 @@ export const getUser = async (api, customerId) => {
 
 export const getAllUser = async (api) => {
   const response = await api.get(`/users/`);
-  return response.data;
+  return response.data.results;
 };

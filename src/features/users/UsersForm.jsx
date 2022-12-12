@@ -1,13 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-import {
-  MDBBadge,
-  MDBBtn,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead,
-} from 'mdb-react-ui-kit';
-
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'bootstrap/dist/css/bootstrap.css';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import { getAllUser } from '../../services/users';
 import FullPageLoader from '../../components/spinners/FullPageLoader';
 import ErrorMessage from '../../components/errors/ErrorMessage';
@@ -20,9 +18,31 @@ const UsersForm = () => {
     ['results'],
     () => getAllUser(api)
   );
+
   useEffect(() => {
     refetch();
   }, []);
+
+  const columns = [
+    { dataField: 'id', text: 'Id' },
+    {
+      dataField: 'first_name',
+      text: 'First Name',
+      sort: true,
+      filter: textFilter(),
+    },
+    { dataField: 'last_name', text: 'Last Name', sort: true },
+    {
+      dataField: 'staff_number',
+      text: 'Staff Number',
+      sort: true,
+      filter: textFilter(),
+    },
+    { dataField: 'roles', text: 'Roles' },
+    { dataField: 'phone_number', text: 'Phone Number' },
+    { dataField: 'email', text: 'Phone Number', sort: true },
+  ];
+
   if (isLoading || isFetching) {
     return (
       <div className="centered">
@@ -30,6 +50,7 @@ const UsersForm = () => {
       </div>
     );
   }
+
   if (isError) {
     return (
       <div className="centered">
@@ -39,45 +60,17 @@ const UsersForm = () => {
   }
   return (
     <div className="listContainer">
-      <div className="listTitle"> Users in the database</div>
-      <MDBTable align="middle">
-        <MDBTableHead>
-          <tr>
-            <th scope="col">User Id</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Staff Number</th>
-            <th scope="col">Role</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody>
-          {data?.results.map((results) => (
-            <tr>
-              <td>{results?.id}</td>
-              <td>{results?.first_name}</td>
-              <td>{results?.last_name}</td>
-              <td>
-                <MDBBadge color="success" pill>
-                  {results?.staff_number}
-                </MDBBadge>
-              </td>
-              <td>{results?.roles}</td>
-              <td>{results?.phone_number}</td>
-              <td>{results?.email}</td>
-              <td>
-                <MDBBtn color="link" rounded size="sm">
-                  Edit
-                </MDBBtn>
-              </td>
-            </tr>
-          ))}
-        </MDBTableBody>
-      </MDBTable>
+      <BootstrapTable
+        bootstrap4
+        keyField="id"
+        data={data}
+        columns={columns}
+        filter={filterFactory()}
+        striped
+        hover
+        condensed
+      />
     </div>
   );
 };
-
 export default UsersForm;
